@@ -1,5 +1,6 @@
 package com.AlexandreLoiola.ApiTester.ApiTestSuite.domain.model;
 
+import com.AlexandreLoiola.ApiTester.ApiTestSuite.domain.enumeration.ParameterTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public class RequestParameterModel {
     private String value;
 
     @Column(name = "type", nullable = false, length = 50)
-    private String type;
+    private ParameterTypeEnum type;
 
     @ManyToOne
     @JoinColumn(name = "request_id", nullable = false)

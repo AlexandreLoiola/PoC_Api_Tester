@@ -1,12 +1,14 @@
 package com.AlexandreLoiola.ApiTester.ApiTestSuite.domain.model;
 
 import com.AlexandreLoiola.ApiTester.ApiTestSuite.domain.enumeration.HttpMethodEnum;
+import com.AlexandreLoiola.ApiTester.ApiTestSuite.infrastructure.ZonedDateTimeAttributeConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,4 +42,27 @@ public class RequestModel {
 
     @Column(name = "description", length = 1000)
     private String description;
+
+    @Convert(converter = ZonedDateTimeAttributeConverter.class)
+    @Column(name = "created_at", nullable = false)
+    private ZonedDateTime createdAt;
+
+    @Convert(converter = ZonedDateTimeAttributeConverter.class)
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
+    @Version
+    @Column(name = "version", nullable = false)
+    private long version;
+
+    @PrePersist
+    public void prePersist() {
+        this.isActive = true;
+        ZonedDateTime now = ZonedDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
 }
